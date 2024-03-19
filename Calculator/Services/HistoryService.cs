@@ -9,9 +9,12 @@ namespace Calculator.Backend.Services
     {
 
         public CalculatorDataContext DbContext { get; set; }
-        public HistoryService(CalculatorDataContext dbContext)
+        public ILogger<HistoryService> Logger { get; set; }
+
+        public HistoryService(CalculatorDataContext dbContext, ILogger<HistoryService> logger)
         {
             DbContext = dbContext;
+            Logger = logger;
         }
 
         public void GetAll()
@@ -21,20 +24,25 @@ namespace Calculator.Backend.Services
 
         public void Add(AddHistoryServiceModel addHistoryServiceModel)
         {
-            var operation = DbContext.Operations.FirstOrDefault(o => o.Name == nameof(addHistoryServiceModel.OperationType));
-            if (operation is not null)
+            string operationName = addHistoryServiceModel.OperationType.ToString();
+            var operation = DbContext.Operations.FirstOrDefault(o => o.Name == operationName);
+            if (operation is null)
             {
-                var history = new History
-                {
-                    Param1 = addHistoryServiceModel.Param1,
-                    Param2 = addHistoryServiceModel.Param2,
-                    Result = addHistoryServiceModel.Result,
-                    OperationId = operation.Id
-                };
-
-                DbContext.Histories.Add(history);
-                DbContext.SaveChanges();
+                string logMessage = $"Operation with name {operationName} not found. Can't Add data to History table";
+                Logger.LogError(logMessage);
+                return;
             }
+
+            var history = new History
+            {
+                Param1 = addHistoryServiceModel.Param1,
+                Param2 = addHistoryServiceModel.Param2,
+                Result = addHistoryServiceModel.Result,
+                OperationId = operation.Id
+            };
+
+            DbContext.Histories.Add(history);
+            DbContext.SaveChanges();
         }
     }
 }
