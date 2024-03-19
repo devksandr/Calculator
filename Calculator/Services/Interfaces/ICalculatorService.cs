@@ -1,4 +1,4 @@
-﻿namespace Calculator.Services
+﻿namespace Calculator.Backend.Services.Interfaces
 {
     public interface ICalculatorService
     {

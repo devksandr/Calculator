@@ -1,6 +1,8 @@
-﻿using Calculator.Services;
-using Calculator.Models;
+﻿using Calculator.Models;
 using Microsoft.AspNetCore.Mvc;
+using Calculator.Backend.Services.Interfaces;
+using Calculator.Backend.Data.ServiceModels.History;
+using Calculator.Backend.Data.Enums;
 
 namespace Calculator.Controllers
 {
@@ -9,9 +11,12 @@ namespace Calculator.Controllers
     public class CalculatorController : ControllerBase
     {
         ICalculatorService CalculatorService { get; }
-        public CalculatorController(ICalculatorService calculatorService)
+        IHistoryService HistoryService { get; }
+
+        public CalculatorController(ICalculatorService calculatorService, IHistoryService historyService)
         {
             CalculatorService = calculatorService;
+            HistoryService = historyService;
         }
 
         [HttpGet]
@@ -24,6 +29,16 @@ namespace Calculator.Controllers
         public float Sum([FromBody] CalculatorParamsModel param)
         {
             var result = CalculatorService.Sum(param.A, param.B);
+
+            var addHistoryServiceModel = new AddHistoryServiceModel
+            {
+                Param1 = param.A,
+                Param2 = param.B,
+                Result = result,
+                OperationType = OperationType.Sum
+            };
+            HistoryService.Add(addHistoryServiceModel);
+
             return result;
         }
 

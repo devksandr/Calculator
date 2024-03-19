@@ -1,11 +1,13 @@
 using Calculator.Backend.Data;
-using Calculator.Services;
+using Calculator.Backend.Services;
+using Calculator.Backend.Services.Interfaces;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddTransient<ICalculatorService, CalculatorService>();
+builder.Services.AddTransient<IHistoryService, HistoryService>();
 
 builder.Services.AddCors();
 

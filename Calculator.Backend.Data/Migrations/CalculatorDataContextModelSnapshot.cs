@@ -64,7 +64,7 @@ namespace Calculator.Backend.Data.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("5835674a-c5af-43e7-9e1f-aee8208c83f5"),
+                            Id = new Guid("ae52c19d-8957-4c07-9a97-c4c831f939c8"),
                             Name = "Sum"
                         });
                 });
