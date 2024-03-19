@@ -1,6 +1,6 @@
 ﻿using Calculator.Backend.Data;
-using Calculator.Backend.Data.Entities;
-using Calculator.Backend.Data.ServiceModels.History;
+using Calculator.Backend.Data.Models.Entities;
+using Calculator.Backend.Data.Models.ServiceModels.History;
 using Calculator.Backend.Services.Interfaces;
 
 namespace Calculator.Backend.Services

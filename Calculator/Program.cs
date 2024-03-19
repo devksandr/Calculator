@@ -39,7 +39,7 @@ void InitLogger(WebApplicationBuilder builder)
 
 void InitServices(WebApplicationBuilder builder)
 {
-    builder.Services.AddTransient<ICalculatorService, CalculatorService>();
+    builder.Services.AddTransient<IOperationService, OperationService>();
     builder.Services.AddTransient<IHistoryService, HistoryService>();
     builder.Services.AddCors();
     builder.Services.AddControllers();

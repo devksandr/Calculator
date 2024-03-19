@@ -1,6 +1,6 @@
 ﻿namespace Calculator.Backend.Services.Interfaces
 {
-    public interface ICalculatorService
+    public interface IOperationService
     {
         public float Sum(float a, float b);
     }

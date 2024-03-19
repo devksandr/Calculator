@@ -1,14 +1,12 @@
 ﻿using Calculator.Backend.Data;
-using Calculator.Backend.Data.Entities;
 using Calculator.Backend.Services.Interfaces;
-using Microsoft.EntityFrameworkCore;
 
 namespace Calculator.Backend.Services
 {
-    public class CalculatorService : ICalculatorService
+    public class OperationService : IOperationService
     {
         public CalculatorDataContext DbContext { get; set; }
-        public CalculatorService(CalculatorDataContext dbContext)
+        public OperationService(CalculatorDataContext dbContext)
         {
             DbContext = dbContext;
         }

@@ -1,19 +1,19 @@
-﻿using Calculator.Models;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Calculator.Backend.Services.Interfaces;
-using Calculator.Backend.Data.ServiceModels.History;
+using Calculator.Backend.Data.Models.ServiceModels.History;
 using Calculator.Backend.Data.Enums;
+using Calculator.Backend.Data.Models.DTO;
 
 namespace Calculator.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
-    public class CalculatorController : ControllerBase
+    public class OperationController : ControllerBase
     {
-        ICalculatorService CalculatorService { get; }
+        IOperationService CalculatorService { get; }
         IHistoryService HistoryService { get; }
 
-        public CalculatorController(ICalculatorService calculatorService, IHistoryService historyService)
+        public OperationController(IOperationService calculatorService, IHistoryService historyService)
         {
             CalculatorService = calculatorService;
             HistoryService = historyService;
@@ -26,14 +26,14 @@ namespace Calculator.Controllers
         }
 
         [HttpPost]
-        public float Sum([FromBody] CalculatorParamsModel param)
+        public float Sum([FromBody] OperationParamsDTO paramsDTO)
         {
-            var result = CalculatorService.Sum(param.A, param.B);
+            var result = CalculatorService.Sum(paramsDTO.Param1, paramsDTO.Param2);
 
             var addHistoryServiceModel = new AddHistoryServiceModel
             {
-                Param1 = param.A,
-                Param2 = param.B,
+                Param1 = paramsDTO.Param1,
+                Param2 = paramsDTO.Param2,
                 Result = result,
                 OperationType = OperationType.Sum
             };

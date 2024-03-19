@@ -1,7 +1,6 @@
-﻿using Calculator.Backend.Data.Entities;
-using Calculator.Backend.Data.Enums;
+﻿using Calculator.Backend.Data.Enums;
 
-namespace Calculator.Backend.Data.ServiceModels.History
+namespace Calculator.Backend.Data.Models.ServiceModels.History
 {
     public class AddHistoryServiceModel
     {

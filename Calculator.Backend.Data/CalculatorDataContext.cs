@@ -1,4 +1,4 @@
-﻿using Calculator.Backend.Data.Entities;
+﻿using Calculator.Backend.Data.Models.Entities;
 using Microsoft.EntityFrameworkCore;
 
 namespace Calculator.Backend.Data

@@ -1,4 +1,4 @@
-﻿using Calculator.Backend.Data.ServiceModels.History;
+﻿using Calculator.Backend.Data.Models.ServiceModels.History;
 
 namespace Calculator.Backend.Services.Interfaces
 {

@@ -1,4 +1,4 @@
-﻿namespace Calculator.Backend.Data.Entities
+﻿namespace Calculator.Backend.Data.Models.Entities
 {
     public class Operation
     {
