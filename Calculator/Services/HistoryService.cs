@@ -1,4 +1,5 @@
 ﻿using Calculator.Backend.Data;
+using Calculator.Backend.Data.Extensions;
 using Calculator.Backend.Data.Models.DTO;
 using Calculator.Backend.Data.Models.Entities;
 using Calculator.Backend.Data.Models.ServiceModels.History;
@@ -25,7 +26,7 @@ namespace Calculator.Backend.Services
 
         public void Add(AddHistoryServiceModel addHistoryServiceModel)
         {
-            string operationName = addHistoryServiceModel.OperationType.ToString();
+            string operationAlias = addHistoryServiceModel.OperationType.ToString();
 
             if (!DbContext.Database.CanConnect())
             {
@@ -34,10 +35,12 @@ namespace Calculator.Backend.Services
                 return;
             }
 
-            var operation = DbContext.Operations.FirstOrDefault(o => o.Name == operationName);
+            var operation = DbContext.Operations
+                .ToList()
+                .FirstOrDefault(o => o.Alias.IsEqualsIgnoreCase(operationAlias));
             if (operation is null)
             {
-                string logMessage = $"Operation with name {operationName} not found. Can't Add data to History table";
+                string logMessage = $"Operation '{operationAlias}' not found. Can't Add data to History table";
                 Logger.LogError(logMessage);
                 return;
             }
