@@ -10,25 +10,26 @@ namespace Calculator.Controllers
     [Route("api/[controller]")]
     public class OperationController : ControllerBase
     {
-        IOperationService CalculatorService { get; }
+        IOperationService OperationService { get; }
         IHistoryService HistoryService { get; }
 
         public OperationController(IOperationService calculatorService, IHistoryService historyService)
         {
-            CalculatorService = calculatorService;
+            OperationService = calculatorService;
             HistoryService = historyService;
         }
 
         [HttpGet]
-        public string Test()
+        public List<OperationDTO> GetAllOperations()
         {
-            return "test";
+            var operationsDTO = OperationService.GetAllOperations();
+            return operationsDTO;
         }
 
         [HttpPost]
         public float Sum([FromBody] OperationParamsDTO paramsDTO)
         {
-            var result = CalculatorService.Sum(paramsDTO.Param1, paramsDTO.Param2);
+            var result = OperationService.Sum(paramsDTO.Param1, paramsDTO.Param2);
 
             var addHistoryServiceModel = new AddHistoryServiceModel
             {

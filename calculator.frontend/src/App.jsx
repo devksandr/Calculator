@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import reactLogo from './assets/react.svg'
 import viteLogo from '/vite.svg'
 import './App.css'
@@ -7,30 +7,34 @@ import Param from './components/Param/Param.jsx'
 import Operation from './components/Operation/Operation.jsx'
 
 function App() {
+	const apiURI = 'https://localhost:7160/api';
 	const [count, setCount] = useState(0);
 
 	const [param1, setParam1] = useState(0);
 	const [param2, setParam2] = useState(0);
 	const [operation, setOperation] = useState('');
 
-	function handleSumRequest() {
+	useEffect(() => {
+		handleGetAllOperationsRequest();
+	}, []);
 
-		/*
-		axios.get('https://localhost:7160/api/Calculator/')
+	function handleGetAllOperationsRequest() {
+		axios.get(`${apiURI}/Operation`)
 			.then(function (response) {
 				console.log(response);
 			})
 			.catch(function (error) {
 				console.log(error);
 			});
-		*/
+	}
 
+	function handleSumRequest() {
 		var body = {
 			param1: 1,
 			param2: 2
 		};
 
-		axios.post('https://localhost:7160/api/Operation', body)
+		axios.post(`${apiURI}/Operation`, body)
 			.then(function (response) {
 				console.log(response);
 			})
