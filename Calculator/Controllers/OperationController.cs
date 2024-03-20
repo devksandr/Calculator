@@ -20,18 +20,18 @@ namespace Calculator.Controllers
         }
 
         [HttpGet]
-        public List<OperationDTO> GetAllOperations()
+        public IActionResult GetAllOperations()
         {
             var operationsDTO = OperationService.GetAllOperations();
-            return operationsDTO;
+            return Ok(operationsDTO);
         }
 
         [HttpPost]
-        public float Calculate([FromBody] OperationParamsDTO paramsDTO)
+        public IActionResult Calculate([FromBody] OperationParamsDTO paramsDTO)
         {
             if (paramsDTO.OperationType == OperationType.Undefined)
             {
-                return -1;
+                return BadRequest();
             }
 
             var result = OperationService.Calculate(paramsDTO);
@@ -45,7 +45,7 @@ namespace Calculator.Controllers
             };
             HistoryService.Add(addHistoryServiceModel);
 
-            return result;
+            return Ok(result);
         }
 
     }
