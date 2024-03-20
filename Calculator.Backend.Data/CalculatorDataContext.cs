@@ -11,7 +11,8 @@ namespace Calculator.Backend.Data
         {
             var defaultOperations = new Operation[]
             {
-                new Operation { Id = Guid.NewGuid(), Name = "Sum" }
+                new Operation { Id = Guid.NewGuid(), Name = "Sum", Alias = "SUM", Sign = "+" },
+                new Operation { Id = Guid.NewGuid(), Name = "Difference", Alias = "DIFF", Sign = "-" }
             };
 
             modelBuilder.Entity<Operation>().HasData(defaultOperations);

@@ -13,6 +13,7 @@ function App() {
 	const [param1, setParam1] = useState(0);
 	const [param2, setParam2] = useState(0);
 	const [operation, setOperation] = useState('');
+	const [operations, setOperations] = useState([]);
 
 	useEffect(() => {
 		handleGetAllOperationsRequest();
@@ -21,17 +22,23 @@ function App() {
 	function handleGetAllOperationsRequest() {
 		axios.get(`${apiURI}/Operation`)
 			.then(function (response) {
-				console.log(response);
+				let operations = response.data;
+				if (Array.isArray(operations) && operations.length > 0) {
+					setOperation(operations[0].alias)
+					setOperations(operations);
+				}
+				console.log(operations);
 			})
 			.catch(function (error) {
 				console.log(error);
 			});
 	}
 
-	function handleSumRequest() {
+	function handleCalculatorRequest() {
 		var body = {
-			param1: 1,
-			param2: 2
+			param1: param1,
+			param2: param2,
+			operationType: operation
 		};
 
 		axios.post(`${apiURI}/Operation`, body)
@@ -66,11 +73,11 @@ function App() {
 
 		<div>
 			<Param setParam={setParam1} />
-			<Operation setOperation={setOperation} />
+			<Operation setOperation={setOperation} operations={ operations } />
 			<Param setParam={setParam2} />
 
-			<button onClick={handleSumRequest}>
-				Sum
+			<button onClick={handleCalculatorRequest}>
+				Calculate
 			</button>
 		</div>
 	</>

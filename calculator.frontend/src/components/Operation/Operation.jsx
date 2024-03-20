@@ -1,6 +1,6 @@
 import './Operation.css'
 
-function Operation({ setOperation }) {
+function Operation({ setOperation, operations }) {
 
 	function handleOperationChange(e) {
 		setOperation(e.target.value);
@@ -8,7 +8,13 @@ function Operation({ setOperation }) {
 
 	return (
 		<>
-			<select></select>
+			<select
+				onChange={(e) => setOperation(e.target.value)}
+			>
+				{operations.map((operation, index) => (
+					<option key={index} value={operation.alias}>{operation.sign}</option>
+				))}
+			</select>
 		</>
 	)
 }

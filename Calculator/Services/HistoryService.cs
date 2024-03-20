@@ -1,4 +1,5 @@
 ﻿using Calculator.Backend.Data;
+using Calculator.Backend.Data.Models.DTO;
 using Calculator.Backend.Data.Models.Entities;
 using Calculator.Backend.Data.Models.ServiceModels.History;
 using Calculator.Backend.Services.Interfaces;
@@ -25,6 +26,14 @@ namespace Calculator.Backend.Services
         public void Add(AddHistoryServiceModel addHistoryServiceModel)
         {
             string operationName = addHistoryServiceModel.OperationType.ToString();
+
+            if (!DbContext.Database.CanConnect())
+            {
+                string logMessage = $"Can't connect to database";
+                Logger.LogWarning(logMessage);
+                return;
+            }
+
             var operation = DbContext.Operations.FirstOrDefault(o => o.Name == operationName);
             if (operation is null)
             {

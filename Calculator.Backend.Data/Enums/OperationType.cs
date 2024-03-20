@@ -2,6 +2,6 @@
 {
     public enum OperationType
     {
-        Sum
+        Undefined, Sum, Diff
     }
 }

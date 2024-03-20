@@ -27,16 +27,21 @@ namespace Calculator.Controllers
         }
 
         [HttpPost]
-        public float Sum([FromBody] OperationParamsDTO paramsDTO)
+        public float Calculate([FromBody] OperationParamsDTO paramsDTO)
         {
-            var result = OperationService.Sum(paramsDTO.Param1, paramsDTO.Param2);
+            if (paramsDTO.OperationType == OperationType.Undefined)
+            {
+                return -1;
+            }
+
+            var result = OperationService.Calculate(paramsDTO);
 
             var addHistoryServiceModel = new AddHistoryServiceModel
             {
                 Param1 = paramsDTO.Param1,
                 Param2 = paramsDTO.Param2,
                 Result = result,
-                OperationType = OperationType.Sum
+                OperationType = paramsDTO.OperationType
             };
             HistoryService.Add(addHistoryServiceModel);
 

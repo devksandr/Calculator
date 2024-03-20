@@ -22,7 +22,7 @@ namespace Calculator.Backend.Data.Migrations
 
             NpgsqlModelBuilderExtensions.UseSerialColumns(modelBuilder);
 
-            modelBuilder.Entity("Calculator.Backend.Data.Models.History", b =>
+            modelBuilder.Entity("Calculator.Backend.Data.Models.Entities.History", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -47,13 +47,21 @@ namespace Calculator.Backend.Data.Migrations
                     b.ToTable("Histories");
                 });
 
-            modelBuilder.Entity("Calculator.Backend.Data.Models.Operation", b =>
+            modelBuilder.Entity("Calculator.Backend.Data.Models.Entities.Operation", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uuid");
 
+                    b.Property<string>("Alias")
+                        .IsRequired()
+                        .HasColumnType("text");
+
                     b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("Sign")
                         .IsRequired()
                         .HasColumnType("text");
 
@@ -64,14 +72,23 @@ namespace Calculator.Backend.Data.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("ae52c19d-8957-4c07-9a97-c4c831f939c8"),
-                            Name = "Sum"
+                            Id = new Guid("f8d64a33-cdc8-4032-9d39-81d173a006c0"),
+                            Alias = "SUM",
+                            Name = "Sum",
+                            Sign = "+"
+                        },
+                        new
+                        {
+                            Id = new Guid("bd2fb16f-fe17-4b46-82ec-842258ae5cc4"),
+                            Alias = "DIFF",
+                            Name = "Difference",
+                            Sign = "-"
                         });
                 });
 
-            modelBuilder.Entity("Calculator.Backend.Data.Models.History", b =>
+            modelBuilder.Entity("Calculator.Backend.Data.Models.Entities.History", b =>
                 {
-                    b.HasOne("Calculator.Backend.Data.Models.Operation", "Operation")
+                    b.HasOne("Calculator.Backend.Data.Models.Entities.Operation", "Operation")
                         .WithMany()
                         .HasForeignKey("OperationId")
                         .OnDelete(DeleteBehavior.Cascade)
