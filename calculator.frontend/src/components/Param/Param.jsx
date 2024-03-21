@@ -1,9 +1,22 @@
 import './Param.css'
 
 function Param({ setParam }) {
+
+	const mystyle = {
+		float: "left",
+		marginRight : "20px"
+	};
+
 	return (
 		<>
-			<input onChange={(e) => setParam(e.target.value)} />
+			<div class="preference" style={mystyle}>
+				<label for="param">Param</label>
+				<input
+					onChange={(e) => setParam(e.target.value)}
+					className="param"
+					name="param"
+				/>
+			</div>
 		</>
 	)
 }
