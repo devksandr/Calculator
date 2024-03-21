@@ -364,3 +364,6 @@ FodyWeavers.xsd
 
 # DB Migrations
 Migrations/
+
+# Backend settings
+Calculator/appsettings.json

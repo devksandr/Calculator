@@ -9,8 +9,8 @@ function Param({ setParam }) {
 
 	return (
 		<>
-			<div class="preference" style={mystyle}>
-				<label for="param">Param</label>
+			<div style={mystyle}>
+				<label htmlFor="param">Param</label>
 				<input
 					onChange={(e) => setParam(e.target.value)}
 					className="param"

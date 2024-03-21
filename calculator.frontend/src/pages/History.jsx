@@ -1,92 +1,36 @@
+import { useState, useEffect } from 'react'
+import axios from 'axios'
 import { useMemo } from 'react'
 import { MRT_Table, useMaterialReactTable } from 'material-react-table';
+import { API_URI } from '../scripts/const.js'
+import HistoryTable from './HistoryTable.jsx';
+
+
 
 export function History() {
+	const [history, setHistory] = useState([]);
 
-	const data = [
-		{
-			param1: 11,
-			operation: '+',
-			param2: 2,
-			calculate: '',
-			result: 3,
-		}
-	];
+	useEffect(() => {
+		handleGetHistoryRequest();
+	}, []);
 
-	const columns = useMemo(
-
-		() => [
-			{
-				accessorKey: 'param1',
-				header: 'Parameter 1',
-			},
-			{
-				accessorKey: 'operation',
-				header: 'Operation',
-			},
-			{
-				accessorKey: 'param2',
-				header: 'Parameter 2',
-			},
-			{
-				accessorKey: 'calculate',
-				header: 'Calculate',
-			},
-			{
-				accessorKey: 'result',
-				header: 'Result',
-			},
-			{
-				accessorKey: 'asd',
-				header: 'zxc',
-				title: 'Client',
-				field: 'id',
-				render: () => <p>asdzxc</p>,
-				editComponent: () => (
-					<p>try</p>
-				)
-			}
-		],
-		[],
-	);
-
-	const table = useMaterialReactTable({
-		columns,
-		data, //data must be memoized or stable (useState, useMemo, defined outside of this component, etc.)
-		enableColumnActions: false,
-		enableColumnFilters: false,
-		enablePagination: false,
-		enableSorting: false,
-		mrtTheme: (theme) => ({
-			baseBackgroundColor: theme.palette.background.default, //change default background color
-		}),
-		muiTableBodyRowProps: { hover: false },
-		muiTableProps: {
-			sx: {
-				border: '1px solid rgba(81, 81, 81, .5)',
-				caption: {
-					captionSide: 'top',
-				},
-			},
-		},
-		muiTableHeadCellProps: {
-			sx: {
-				border: '1px solid rgba(81, 81, 81, .5)',
-				fontStyle: 'italic',
-				fontWeight: 'normal',
-			},
-		},
-		muiTableBodyCellProps: {
-			sx: {
-				border: '1px solid rgba(81, 81, 81, .5)',
-			},
-		},
-	});
+	function handleGetHistoryRequest() {
+		axios.get(`${API_URI}/History`)
+			.then(function (response) {
+				let history = response.data;
+				if (Array.isArray(history) && history.length > 0) {
+					setHistory(history);
+				}
+			})
+			.catch(function (error) {
+				console.log(error);
+			});
+	}
 
     return (
         <>
 			<h1>History</h1>
-			<MRT_Table table={table} />
+			<HistoryTable data={history } />
         </>
     )
 }

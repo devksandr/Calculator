@@ -1,10 +1,11 @@
-﻿using Calculator.Backend.Data.Models.ServiceModels.History;
+﻿using Calculator.Backend.Data.Models.DTO;
+using Calculator.Backend.Data.Models.ServiceModels.History;
 
 namespace Calculator.Backend.Services.Interfaces
 {
     public interface IHistoryService
     {
-        public void GetAll();
+        public List<HistoryDTO> GetAll();
         public void Add(AddHistoryServiceModel addHistoryServiceModel);
     }
 }

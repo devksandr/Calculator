@@ -19,11 +19,6 @@ namespace Calculator.Backend.Services
             Logger = logger;
         }
 
-        public void GetAll()
-        {
-            throw new NotImplementedException();
-        }
-
         public void Add(AddHistoryServiceModel addHistoryServiceModel)
         {
             string operationAlias = addHistoryServiceModel.OperationType.ToString();
@@ -55,6 +50,33 @@ namespace Calculator.Backend.Services
 
             DbContext.Histories.Add(history);
             DbContext.SaveChanges();
+        }
+
+        public List<HistoryDTO> GetAll()
+        {
+            var historiesDTO = new List<HistoryDTO>();
+
+            if (!DbContext.Database.CanConnect())
+            {
+                string logMessage = $"Can't connect to database";
+                Logger.LogWarning(logMessage);
+                return historiesDTO;
+            }
+
+            historiesDTO = DbContext.Histories.Join(
+                DbContext.Operations,
+                h => h.OperationId,
+                o => o.Id,
+                (h, o) => new HistoryDTO
+                {
+                    Param1 = h.Param1,
+                    Param2 = h.Param2,
+                    Result = h.Result,
+                    OperationName = o.Name
+                })
+                .ToList();
+
+            return historiesDTO;
         }
     }
 }

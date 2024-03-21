@@ -2,10 +2,9 @@ import { useState, useEffect } from 'react'
 import axios from 'axios'
 import Param from '../components/Param/Param.jsx'
 import Operation from '../components/Operation/Operation.jsx'
+import { API_URI } from '../scripts/const.js'
 
 export function Home() {
-	const apiURI = 'https://localhost:7160/api';
-
 	const [param1, setParam1] = useState(0);
 	const [param2, setParam2] = useState(0);
 	const [operation, setOperation] = useState('');
@@ -16,14 +15,13 @@ export function Home() {
 	}, []);
 
 	function handleGetAllOperationsRequest() {
-		axios.get(`${apiURI}/Operation`)
+		axios.get(`${API_URI}/Operation`)
 			.then(function (response) {
 				let operations = response.data;
 				if (Array.isArray(operations) && operations.length > 0) {
 					setOperation(operations[0].alias)
 					setOperations(operations);
 				}
-				console.log(operations);
 			})
 			.catch(function (error) {
 				console.log(error);
