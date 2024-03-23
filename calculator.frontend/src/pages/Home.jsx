@@ -1,10 +1,14 @@
 import { useState, useEffect } from 'react'
 import axios from 'axios'
+import { useOutletContext } from "react-router-dom";
 import Param from '../components/Param/Param.jsx'
 import Operation from '../components/Operation/Operation.jsx'
-import { API_URI } from '../scripts/const.js'
+import { API_URI, CONNECTION_ERROR_MESSAGES } from '../scripts/const.js'
+import { Preloader } from '../components/Preloader/Preloader.jsx'
 
-export function Home() {
+export function Home({ header }) {
+	const [loading, setLoading] = useOutletContext();
+
 	const [param1, setParam1] = useState(0);
 	const [param2, setParam2] = useState(0);
 	const [operation, setOperation] = useState('');
@@ -22,9 +26,19 @@ export function Home() {
 					setOperation(operations[0].alias)
 					setOperations(operations);
 				}
+
+				setLoading({
+					preloader: false,
+					data: true,
+					message: operations.length > 0 ? '' : CONNECTION_ERROR_MESSAGES.database
+				});
 			})
 			.catch(function (error) {
-				console.log(error);
+				setLoading({
+					preloader: false,
+					data: false,
+					message: CONNECTION_ERROR_MESSAGES.server
+				});
 			});
 	}
 
@@ -47,16 +61,22 @@ export function Home() {
 
 	return (
 		<>
-			<h1>Calculator</h1>
-			<div>
-				<Param setParam={setParam1} />
-				<Operation setOperation={setOperation} operations={operations} />
-				<Param setParam={setParam2} />
+			<h1>{header}</h1>
+			{
+				!loading.data || loading.message ?
+					<p>{loading.message}</p> :
+					<div>
+						<Param setParam={setParam1} />
+						<Operation setOperation={setOperation} operations={operations} />
+						<Param setParam={setParam2} />
 
-				<button onClick={handleCalculatorRequest}>
-					Calculate
-				</button>
-			</div>
+						<button onClick={handleCalculatorRequest}>
+							Calculate
+						</button>
+					</div>
+			}
+			
+			<Preloader state={loading.preloader} />
 		</>
 	)
 }
