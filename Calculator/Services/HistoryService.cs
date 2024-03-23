@@ -52,17 +52,16 @@ namespace Calculator.Backend.Services
             DbContext.SaveChanges();
         }
 
-        public List<HistoryDTO> GetAll()
+        public List<HistoryDTO>? GetAll()
         {
-            var historiesDTO = new List<HistoryDTO>();
-
             if (!DbContext.Database.CanConnect())
             {
                 string logMessage = $"Can't connect to database";
                 Logger.LogWarning(logMessage);
-                return historiesDTO;
+                return null;
             }
 
+            var historiesDTO = new List<HistoryDTO>();
             historiesDTO = DbContext.Histories.Join(
                 DbContext.Operations,
                 h => h.OperationId,

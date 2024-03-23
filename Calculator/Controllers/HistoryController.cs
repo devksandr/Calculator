@@ -18,6 +18,11 @@ namespace Calculator.Controllers
         public IActionResult GetAll()
         {
             var historiesDTO = HistoryService.GetAll();
+            if (historiesDTO is null)
+            {
+                return StatusCode(StatusCodes.Status503ServiceUnavailable);
+            }
+
             return Ok(historiesDTO);
         }
     }

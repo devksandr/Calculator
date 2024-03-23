@@ -19,17 +19,16 @@ namespace Calculator.Backend.Services
             Logger = logger;
         }
 
-        public List<OperationDTO> GetAllOperations()
+        public List<OperationDTO>? GetAllOperations()
         {
-            var operationsDTO = new List<OperationDTO>();
-
             if (!DbContext.Database.CanConnect())
             {
                 string logMessage = $"Can't connect to database";
                 Logger.LogWarning(logMessage);
-                return operationsDTO;
+                return null;
             }
 
+            var operationsDTO = new List<OperationDTO>();
             var operations = DbContext.Operations.ToList();
             operations.ForEach(o => operationsDTO.Add(new OperationDTO
             {

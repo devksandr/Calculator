@@ -5,7 +5,7 @@ namespace Calculator.Backend.Services.Interfaces
 {
     public interface IHistoryService
     {
-        public List<HistoryDTO> GetAll();
+        public List<HistoryDTO>? GetAll();
         public void Add(AddHistoryServiceModel addHistoryServiceModel);
     }
 }

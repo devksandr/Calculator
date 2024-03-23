@@ -5,6 +5,7 @@ import Param from '../components/Param/Param.jsx'
 import Operation from '../components/Operation/Operation.jsx'
 import { API_URI, CONNECTION_ERROR_MESSAGES } from '../scripts/const.js'
 import { Preloader } from '../components/Preloader/Preloader.jsx'
+import { getConnectionErrorByStatus } from '../scripts/func.js'
 
 export function Home({ header }) {
 	const [loading, setLoading] = useOutletContext();
@@ -30,14 +31,14 @@ export function Home({ header }) {
 				setLoading({
 					preloader: false,
 					data: true,
-					message: operations.length > 0 ? '' : CONNECTION_ERROR_MESSAGES.database
+					message: operations.length > 0 ? '' : CONNECTION_ERROR_MESSAGES.defaultData
 				});
 			})
 			.catch(function (error) {
 				setLoading({
 					preloader: false,
 					data: false,
-					message: CONNECTION_ERROR_MESSAGES.server
+					message: getConnectionErrorByStatus(error.code)
 				});
 			});
 	}
@@ -49,7 +50,7 @@ export function Home({ header }) {
 			operationType: operation
 		};
 
-		axios.post(`${apiURI}/Operation`, body)
+		axios.post(`${API_URI}/Operation`, body)
 			.then(function (response) {
 				console.log(response);
 			})

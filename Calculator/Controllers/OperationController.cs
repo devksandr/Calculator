@@ -23,6 +23,11 @@ namespace Calculator.Controllers
         public IActionResult GetAllOperations()
         {
             var operationsDTO = OperationService.GetAllOperations();
+            if (operationsDTO is null) 
+            {
+                return StatusCode(StatusCodes.Status503ServiceUnavailable);
+            }
+
             return Ok(operationsDTO);
         }
 

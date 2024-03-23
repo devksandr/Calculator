@@ -72,14 +72,14 @@ namespace Calculator.Backend.Data.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("dda8cb48-312a-4b81-9f5a-cd2d89b9ccd1"),
+                            Id = new Guid("567c5c47-b21b-4926-8873-2d0449199457"),
                             Alias = "SUM",
                             Name = "Sum",
                             Sign = "+"
                         },
                         new
                         {
-                            Id = new Guid("5c549d70-f5c6-4732-bf76-99303ccc9aaa"),
+                            Id = new Guid("404b2d7d-074e-4b26-a80e-03589dc0b0e6"),
                             Alias = "DIFF",
                             Name = "Difference",
                             Sign = "-"
