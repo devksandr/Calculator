@@ -4,5 +4,5 @@ import App from './App.jsx'
 import './index.css'
 
 ReactDOM.createRoot(document.getElementById('root')).render(
-    <App />
+    <div className="no-selection"><App /></div>
 )

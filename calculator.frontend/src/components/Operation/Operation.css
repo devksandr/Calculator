@@ -1,0 +1,8 @@
+.operation {
+    margin-left: 20px;
+    margin-right: 20px;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    text-indent: 1px;
+    text-overflow: '';
+}

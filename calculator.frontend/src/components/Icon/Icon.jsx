@@ -4,7 +4,7 @@ import './Icon.css'
 export function Icon() {
     return (
         <>
-            <img src={icon} className='logo' />
+            <img src={icon} className='logo' draggable="false" />
         </>
     )
 }

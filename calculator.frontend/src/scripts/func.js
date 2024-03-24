@@ -13,3 +13,5 @@ export function getConnectionErrorByStatus(status) {
 	}
 	return errMessage;
 }
+
+export const isNumeric = (value) => !isNaN(value) && !isNaN(parseFloat(value));

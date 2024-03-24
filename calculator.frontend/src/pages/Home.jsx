@@ -1,22 +1,26 @@
 import { useState, useEffect } from 'react'
+import './Home.css'
 import axios from 'axios'
 import { useOutletContext } from "react-router-dom";
 import Param from '../components/Param/Param.jsx'
 import Operation from '../components/Operation/Operation.jsx'
 import { API_URI, CONNECTION_ERROR_MESSAGES } from '../scripts/const.js'
 import { Preloader } from '../components/Preloader/Preloader.jsx'
-import { getConnectionErrorByStatus } from '../scripts/func.js'
+import { getConnectionErrorByStatus, isNumeric } from '../scripts/func.js'
 
 export function Home({ header }) {
+
 	const [loading, setLoading] = useOutletContext();
 
-	const [param1, setParam1] = useState(0);
-	const [param2, setParam2] = useState(0);
+	const [param1, setParam1] = useState({ data: '', isValid: true });
+	const [param2, setParam2] = useState({ data: '', isValid: true });
 	const [operation, setOperation] = useState('');
 	const [operations, setOperations] = useState([]);
 
 	useEffect(() => {
 		handleGetAllOperationsRequest();
+
+		//setInterval(() => console.log(new Date()), 10000); // check server ping
 	}, []);
 
 	function handleGetAllOperationsRequest() {
@@ -44,9 +48,14 @@ export function Home({ header }) {
 	}
 
 	function handleCalculatorRequest() {
+
+		if (!paramsValidation()) {
+			return;
+		}
+
 		var body = {
-			param1: param1,
-			param2: param2,
+			param1: param1.data,
+			param2: param2.data,
 			operationType: operation
 		};
 
@@ -57,8 +66,31 @@ export function Home({ header }) {
 			.catch(function (error) {
 				console.log(error);
 			});
-
 	}
+
+	function paramsValidation() {
+		let validationStatus = true;
+
+		if (!isNumeric(param1.data)) {
+			validationStatus = false;
+			setParam1({
+				...param1,
+				isValid: false
+			});
+		}
+
+		if (!isNumeric(param2.data)) {
+			validationStatus = false;
+			setParam2({
+				...param2,
+				isValid: false
+			});
+		}
+
+		return validationStatus;
+	}
+
+	const isParamsValid = () => isNumeric(param1.data) && isNumeric(param2.data);
 
 	return (
 		<>
@@ -66,10 +98,10 @@ export function Home({ header }) {
 			{
 				!loading.data || loading.message ?
 					<p>{loading.message}</p> :
-					<div>
-						<Param setParam={setParam1} />
+					<div className="container-params">
+						<Param param={param1} setParam={setParam1} index={1} />
 						<Operation setOperation={setOperation} operations={operations} />
-						<Param setParam={setParam2} />
+						<Param param={param2} setParam={setParam2} index={2} />
 
 						<button onClick={handleCalculatorRequest}>
 							Calculate

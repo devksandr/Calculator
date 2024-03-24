@@ -6,15 +6,24 @@ function Operation({ setOperation, operations }) {
 		setOperation(e.target.value);
 	}
 
+	const mystyle = {
+		float: "left",
+	};
+
 	return (
 		<>
-			<select
-				onChange={(e) => setOperation(e.target.value)}
-			>
-				{operations.map((operation, index) => (
-					<option key={index} value={operation.alias}>{operation.sign}</option>
-				))}
-			</select>
+			<div style={mystyle}>
+				<label htmlFor="operation">Operation</label>
+				<select
+					onChange={(e) => setOperation(e.target.value)}
+					className="operation block-params"
+					name="operation"
+				>
+					{operations.map((operation, index) => (
+						<option key={index} value={operation.alias}>{operation.sign}</option>
+					))}
+				</select>
+			</div>
 		</>
 	)
 }

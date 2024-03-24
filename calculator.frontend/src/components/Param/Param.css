@@ -1,22 +1,11 @@
-/*
 .param {
-    width: 20%;
-    font-size: 30pt;
-    margin: 15px;
-}
 
-.param-label {
-    display: block;
-    position: relative;
-    padding-left: 120px;
 }
-
-.param-label > span {
-    position:absolute;
-    left:0;
-}
-*/
 
 input, label {
     display: block;
+}
+
+.invalid {
+    border-color: red;
 }

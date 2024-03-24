@@ -3,4 +3,13 @@
     height: 100px;
     display: block;
     margin: auto;
+    overflow: hidden;
+    transition-duration: 0.7s;
+    transition-property: transform;
+    filter: drop-shadow(0 0 2em #646cffaa);
+}
+
+.logo:hover {
+    transform: rotate(360deg);
+    -webkit-transform: rotate(360deg);
 }
