@@ -1,11 +1,6 @@
 import './Operation.css'
 
 function Operation({ setOperation, operations }) {
-
-	function handleOperationChange(e) {
-		setOperation(e.target.value);
-	}
-
 	const mystyle = {
 		float: "left",
 	};

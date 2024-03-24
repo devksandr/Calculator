@@ -1,7 +1,6 @@
 import './Param.css'
 
 function Param({ param, setParam, index }) {
-
 	const mystyle = {
 		float: "left",
 	};

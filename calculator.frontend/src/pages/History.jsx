@@ -45,7 +45,9 @@ export function History({ header }) {
 			{
 				!loading.data || loading.message ?
 					<p>{loading.message}</p> :
-					<HistoryTable data={history} />
+					<div>
+						<HistoryTable data={history} />
+					</div>
 			}
 			<Preloader state={loading.preloader} />
         </>
