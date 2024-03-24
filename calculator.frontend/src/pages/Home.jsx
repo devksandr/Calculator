@@ -4,7 +4,7 @@ import axios from 'axios'
 import { useOutletContext } from "react-router-dom";
 import Param from '../components/Param/Param.jsx'
 import Operation from '../components/Operation/Operation.jsx'
-import { API_URI, CONNECTION_ERROR_MESSAGES } from '../scripts/const.js'
+import { API_URI, WARNING_MESSAGES } from '../scripts/const.js'
 import { Preloader } from '../components/Preloader/Preloader.jsx'
 import { getConnectionErrorByStatus, isNumeric } from '../scripts/func.js'
 
@@ -35,7 +35,7 @@ export function Home({ header }) {
 				setLoading({
 					preloader: false,
 					data: true,
-					message: operations.length > 0 ? '' : CONNECTION_ERROR_MESSAGES.defaultData
+					message: operations.length > 0 ? '' : WARNING_MESSAGES.defaultData
 				});
 			})
 			.catch(function (error) {
