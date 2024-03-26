@@ -1,4 +1,8 @@
-.block-params {
+.calculator-field-container {
+    float: left;
+}
+
+.calculator-field-data {
     border-radius: 3px;
     border: 1px solid #606060;
     background-color: #242424;
@@ -7,4 +11,8 @@
     padding: 10px 2px;
     margin-top: 20px;
     outline: none;
+}
+
+.calculator-field-data:hover {
+    border: 1px solid white;
 }

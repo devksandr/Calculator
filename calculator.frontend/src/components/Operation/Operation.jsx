@@ -1,17 +1,16 @@
 import './Operation.css'
 
-function Operation({ setOperation, operations }) {
-	const mystyle = {
-		float: "left",
-	};
-
+function Operation({ setOperation, operations, onChanged }) {
 	return (
 		<>
-			<div style={mystyle}>
+			<div className="calculator-field-container">
 				<label htmlFor="operation">Operation</label>
 				<select
-					onChange={(e) => setOperation(e.target.value)}
-					className="operation block-params"
+					onChange={(e) => {
+						setOperation(e.target.value);
+						onChanged();
+					}}
+					className="calculator-field-data operation-block"
 					name="operation"
 				>
 					{operations.map((operation, index) => (

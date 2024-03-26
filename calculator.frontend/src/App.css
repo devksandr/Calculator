@@ -11,6 +11,12 @@
     user-select: none;
 }
 
+.center-element {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
 .logo {
   height: 6em;
   padding: 1.5em;

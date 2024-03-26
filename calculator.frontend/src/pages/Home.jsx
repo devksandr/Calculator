@@ -4,6 +4,8 @@ import axios from 'axios'
 import { useOutletContext } from "react-router-dom";
 import Param from '../components/Param/Param.jsx'
 import Operation from '../components/Operation/Operation.jsx'
+import Result from '../components/Result/Result.jsx'
+import Calculation from '../components/Calculation/Calculation.jsx'
 import { API_URI, WARNING_MESSAGES } from '../scripts/const.js'
 import { Preloader } from '../components/Preloader/Preloader.jsx'
 import { getConnectionErrorByStatus, isNumeric } from '../scripts/func.js'
@@ -16,6 +18,7 @@ export function Home({ header }) {
 	const [param2, setParam2] = useState({ data: '', isValid: true });
 	const [operation, setOperation] = useState('');
 	const [operations, setOperations] = useState([]);
+	const [result, setResult] = useState('');
 
 	useEffect(() => {
 		handleGetAllOperationsRequest();
@@ -61,6 +64,7 @@ export function Home({ header }) {
 
 		axios.post(`${API_URI}/Operation`, body)
 			.then(function (response) {
+				setResult(response.data);
 				console.log(response);
 			})
 			.catch(function (error) {
@@ -90,7 +94,9 @@ export function Home({ header }) {
 		return validationStatus;
 	}
 
-	const isParamsValid = () => isNumeric(param1.data) && isNumeric(param2.data);
+	function fieldChanged() {
+		setResult('');
+	}
 
 	return (
 		<>
@@ -99,13 +105,11 @@ export function Home({ header }) {
 				!loading.data || loading.message ?
 					<p>{loading.message}</p> :
 					<div className="container-params">
-						<Param param={param1} setParam={setParam1} index={1} />
-						<Operation setOperation={setOperation} operations={operations} />
-						<Param param={param2} setParam={setParam2} index={2} />
-
-						<button onClick={handleCalculatorRequest}>
-							Calculate
-						</button>
+						<Param param={param1} setParam={setParam1} onChanged={fieldChanged} index={1} />
+						<Operation setOperation={setOperation} onChanged={fieldChanged} operations={operations} />
+						<Param param={param2} setParam={setParam2} onChanged={fieldChanged} index={2} />
+						<Calculation handleCalculatorRequest={handleCalculatorRequest} />
+						<Result result={result} />
 					</div>
 			}
 			
