@@ -8,7 +8,7 @@ import Result from '../components/Result/Result.jsx'
 import Calculation from '../components/Calculation/Calculation.jsx'
 import { API_URI, WARNING_MESSAGES } from '../scripts/const.js'
 import { Preloader } from '../components/Preloader/Preloader.jsx'
-import { getConnectionErrorByStatus, isNumeric } from '../scripts/func.js'
+import { getConnectionErrorByStatus } from '../scripts/func.js'
 import { isParamValid } from '../scripts/paramValidationService'
 
 export function Home({ header }) {
