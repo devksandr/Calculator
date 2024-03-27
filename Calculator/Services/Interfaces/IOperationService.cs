@@ -5,6 +5,6 @@ namespace Calculator.Backend.Services.Interfaces
     public interface IOperationService
     {
         public List<OperationDTO>? GetAllOperations();
-        public float Calculate(OperationParamsDTO paramsDTO);
+        public double Calculate(OperationParamsDTO paramsDTO);
     }
 }

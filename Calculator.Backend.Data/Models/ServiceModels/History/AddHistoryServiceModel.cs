@@ -4,9 +4,9 @@ namespace Calculator.Backend.Data.Models.ServiceModels.History
 {
     public class AddHistoryServiceModel
     {
-        public float Param1 { get; set; }
-        public float Param2 { get; set; }
-        public float Result { get; set; }
+        public double Param1 { get; set; }
+        public double Param2 { get; set; }
+        public double Result { get; set; }
         public OperationType OperationType { get; set; }
     }
 }

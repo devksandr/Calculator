@@ -39,13 +39,13 @@ namespace Calculator.Backend.Services
             return operationsDTO;
         }
 
-        public float Calculate(OperationParamsDTO paramsDTO) => paramsDTO.OperationType switch
+        public double Calculate(OperationParamsDTO paramsDTO) => paramsDTO.OperationType switch
         {
             OperationType.Sum => Sum(paramsDTO.Param1, paramsDTO.Param2),
             OperationType.Diff => Diff(paramsDTO.Param1, paramsDTO.Param2)
         };
 
-        private float Sum(float a, float b) => a + b;
-        private float Diff(float a, float b) => a - b;
+        private double Sum(double a, double b) => a + b;
+        private double Diff(double a, double b) => a - b;
     }
 }
