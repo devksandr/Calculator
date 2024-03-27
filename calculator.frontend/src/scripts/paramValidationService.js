@@ -9,7 +9,7 @@ export function isParamValid(param) {
 	if (isNumeric(param)) {
 		let numberPartsArr = param.split(".");
 		let numberParts = {
-			integer: numberPartsArr[0],
+			integer: Math.abs(numberPartsArr[0]).toString(),
 			fraction: numberPartsArr[1]
 		};
 

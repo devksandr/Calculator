@@ -10,6 +10,8 @@ namespace Calculator.Backend.Services
 {
     public class OperationService : IOperationService
     {
+        private const int NUMBER_ACCURACY = 3;
+
         public CalculatorDataContext DbContext { get; set; }
         public ILogger<HistoryService> Logger { get; set; }
 
@@ -39,11 +41,11 @@ namespace Calculator.Backend.Services
             return operationsDTO;
         }
 
-        public double Calculate(OperationParamsDTO paramsDTO) => paramsDTO.OperationType switch
+        public double Calculate(OperationParamsDTO paramsDTO) => Math.Round(paramsDTO.OperationType switch
         {
             OperationType.Sum => Sum(paramsDTO.Param1, paramsDTO.Param2),
             OperationType.Diff => Diff(paramsDTO.Param1, paramsDTO.Param2)
-        };
+        }, NUMBER_ACCURACY);
 
         private double Sum(double a, double b) => a + b;
         private double Diff(double a, double b) => a - b;
