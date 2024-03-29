@@ -1,12 +1,12 @@
 import { useState, useEffect } from 'react'
 import axios from 'axios'
-import { API_URI, WARNING_MESSAGES } from '../scripts/const.js'
-import HistoryTable from './HistoryTable.jsx';
+import { API_URI } from '../../scripts/const.js'
+import HistoryTable from '../../components/HistoryTable/HistoryTable.jsx';
 import { useOutletContext } from "react-router-dom";
-import { Preloader } from '../components/Preloader/Preloader.jsx'
-import { getConnectionErrorByStatus } from '../scripts/func.js'
+import { Preloader } from '../../components/Preloader/Preloader.jsx'
+import { getConnectionErrorByStatus, WARNING_MESSAGES } from '../../scripts/connectionMessageService.js'
 
-export function History({ header }) {
+export function HistoryPage({ header }) {
 	const [loading, setLoading] = useOutletContext();
 
 	const [history, setHistory] = useState([]);

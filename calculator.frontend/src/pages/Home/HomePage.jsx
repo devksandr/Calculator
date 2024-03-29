@@ -1,19 +1,19 @@
-import './Home.css'
+import './HomePage.css'
 import { useState, useEffect } from 'react'
-import { useInterval } from '../hooks/useInterval'
+import { useInterval } from '../../hooks/useInterval'
 import axios from 'axios'
 import { useOutletContext } from "react-router-dom";
-import Param from '../components/Param/Param.jsx'
-import Operation from '../components/Operation/Operation.jsx'
-import Result from '../components/Result/Result.jsx'
-import Calculation from '../components/Calculation/Calculation.jsx'
-import { API_URI, WARNING_MESSAGES } from '../scripts/const.js'
-import { Preloader } from '../components/Preloader/Preloader.jsx'
-import { getConnectionErrorByStatus } from '../scripts/func.js'
-import { isParamValid } from '../scripts/paramValidationService'
-import { pingBackendRequest, PING_TIMER } from '../scripts/backendPingService'
+import Param from '../../components/Param/Param.jsx'
+import Operation from '../../components/Operation/Operation.jsx'
+import Result from '../../components/Result/Result.jsx'
+import Calculation from '../../components/Calculation/Calculation.jsx'
+import { API_URI } from '../../scripts/const.js'
+import { Preloader } from '../../components/Preloader/Preloader.jsx'
+import { getConnectionErrorByStatus, WARNING_MESSAGES } from '../../scripts/connectionMessageService.js'
+import { isParamValid } from '../../scripts/paramValidationService'
+import { pingBackendRequest, PING_TIMER } from '../../scripts/backendPingService'
 
-export function Home({ header }) {
+export function HomePage({ header }) {
 	const [loading, setLoading] = useOutletContext();
 
 	const [param1, setParam1] = useState({ data: '', isValid: true });
@@ -26,7 +26,11 @@ export function Home({ header }) {
 		handleGetAllOperationsRequest();
 	}, []);
 
-	const fetchPing = async () => {
+	useInterval(() => {
+		handlePingRequest();
+	}, PING_TIMER);
+
+	const handlePingRequest = async () => {
 		let pingResult = await pingBackendRequest();
 
 		if (!pingResult.server) {
@@ -59,10 +63,6 @@ export function Home({ header }) {
 			});
 		}
 	};
-
-	useInterval(() => {
-		fetchPing();
-	}, PING_TIMER);
 
 	function handleGetAllOperationsRequest() {
 		axios.get(`${API_URI}/Operation`)
@@ -132,7 +132,7 @@ export function Home({ header }) {
 		return validationStatus;
 	}
 
-	function fieldChanged() {
+	function onCalculatorFieldChanged() {
 		setResult('');
 	}
 
@@ -143,9 +143,9 @@ export function Home({ header }) {
 				!loading.data || loading.message ?
 					<p>{loading.message}</p> :
 					<div className="container-params">
-						<Param param={param1} setParam={setParam1} onChanged={fieldChanged} index={1} />
-						<Operation setOperation={setOperation} onChanged={fieldChanged} operations={operations} />
-						<Param param={param2} setParam={setParam2} onChanged={fieldChanged} index={2} />
+						<Param param={param1} setParam={setParam1} onChanged={onCalculatorFieldChanged} index={1} />
+						<Operation setOperation={setOperation} onChanged={onCalculatorFieldChanged} operations={operations} />
+						<Param param={param2} setParam={setParam2} onChanged={onCalculatorFieldChanged} index={2} />
 						<Calculation handleCalculatorRequest={handleCalculatorRequest} />
 						<Result result={result} />
 					</div>

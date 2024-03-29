@@ -1,8 +1,5 @@
-import { useState, useEffect } from 'react'
-import axios from 'axios'
 import { useMemo } from 'react'
 import { MRT_Table, useMaterialReactTable } from 'material-react-table';
-import { API_URI } from '../scripts/const.js'
 
 export function HistoryTable({ data }) {
 	const columns = useMemo(() => [

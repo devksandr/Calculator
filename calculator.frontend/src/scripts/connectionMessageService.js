@@ -1,4 +1,11 @@
-import { WARNING_MESSAGES } from './const.js'
+export const WARNING_MESSAGES = {
+	database: 'Database is unavailable',
+	server: 'Server is unavailable',
+	data: 'No data',
+	defaultData: 'No default data in database',
+	unexpected: 'Unexpected error'
+}
+
 export function getConnectionErrorByStatus(status) {
 	let errMessage;
 	switch (status) {
