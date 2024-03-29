@@ -2,6 +2,8 @@ using Calculator.Backend.Data;
 using Calculator.Backend.Loggers;
 using Calculator.Backend.Services;
 using Calculator.Backend.Services.Interfaces;
+using Calculator.Backend.HealthCheckers;
+using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 using Microsoft.EntityFrameworkCore;
 using System.Reflection;
 
@@ -26,6 +28,12 @@ if (app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 app.UseAuthorization();
 app.MapControllers();
+app.MapHealthChecks(
+    pattern: "/ping",
+    options: new HealthCheckOptions
+    {
+        ResponseWriter = HealthCheckResponse.WriteResponse
+    });
 app.Run();
 
 void InitLogger(WebApplicationBuilder builder)
@@ -39,12 +47,16 @@ void InitLogger(WebApplicationBuilder builder)
 
 void InitServices(WebApplicationBuilder builder)
 {
+    string dbConnectionString = builder.Configuration.GetConnectionString("CalculatorDB");
+
     builder.Services.AddTransient<IOperationService, OperationService>();
     builder.Services.AddTransient<IHistoryService, HistoryService>();
+    builder.Services.AddHealthChecks()
+        .AddNpgSql(dbConnectionString);
     builder.Services.AddCors();
     builder.Services.AddControllers();
     builder.Services.AddDbContext<CalculatorDataContext>(
-        o => o.UseNpgsql(builder.Configuration.GetConnectionString("CalculatorDB")));
+        o => o.UseNpgsql(dbConnectionString));
     builder.Services.AddEndpointsApiExplorer();
     builder.Services.AddSwaggerGen();
 }
