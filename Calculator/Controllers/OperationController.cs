@@ -39,18 +39,22 @@ namespace Calculator.Controllers
                 return BadRequest();
             }
 
-            var result = OperationService.Calculate(paramsDTO);
-
+            var calculationResult = OperationService.Calculate(paramsDTO);
             var addHistoryServiceModel = new AddHistoryServiceModel
             {
                 Param1 = paramsDTO.Param1,
                 Param2 = paramsDTO.Param2,
-                Result = result,
+                Result = calculationResult,
                 OperationType = paramsDTO.OperationType
             };
-            HistoryService.Add(addHistoryServiceModel);
 
-            return Ok(result);
+            var saveHistoryResult = HistoryService.Add(addHistoryServiceModel);
+            if (!saveHistoryResult)
+            {
+                return StatusCode(StatusCodes.Status503ServiceUnavailable);
+            }
+
+            return Ok(calculationResult);
         }
 
     }

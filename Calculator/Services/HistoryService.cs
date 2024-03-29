@@ -19,7 +19,7 @@ namespace Calculator.Backend.Services
             Logger = logger;
         }
 
-        public void Add(AddHistoryServiceModel addHistoryServiceModel)
+        public bool Add(AddHistoryServiceModel addHistoryServiceModel)
         {
             string operationAlias = addHistoryServiceModel.OperationType.ToString();
 
@@ -27,7 +27,7 @@ namespace Calculator.Backend.Services
             {
                 string logMessage = $"Can't connect to database";
                 Logger.LogWarning(logMessage);
-                return;
+                return false;
             }
 
             var operation = DbContext.Operations
@@ -37,7 +37,7 @@ namespace Calculator.Backend.Services
             {
                 string logMessage = $"Operation '{operationAlias}' not found. Can't Add data to History table";
                 Logger.LogError(logMessage);
-                return;
+                return false;
             }
 
             var history = new History
@@ -50,6 +50,7 @@ namespace Calculator.Backend.Services
 
             DbContext.Histories.Add(history);
             DbContext.SaveChanges();
+            return true;
         }
 
         public List<HistoryDTO>? GetAll()
