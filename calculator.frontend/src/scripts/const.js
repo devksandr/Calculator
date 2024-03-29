@@ -1,4 +1,4 @@
-export const API_URI = 'https://localhost:7160/api'
+export const API_URI = 'https://localhost:7160/api';
 
 export const WARNING_MESSAGES = {
     database: 'Database is unavailable',

@@ -1,5 +1,6 @@
-import { useState, useEffect } from 'react'
 import './Home.css'
+import { useState, useEffect } from 'react'
+import { useInterval } from '../hooks/useInterval'
 import axios from 'axios'
 import { useOutletContext } from "react-router-dom";
 import Param from '../components/Param/Param.jsx'
@@ -10,6 +11,7 @@ import { API_URI, WARNING_MESSAGES } from '../scripts/const.js'
 import { Preloader } from '../components/Preloader/Preloader.jsx'
 import { getConnectionErrorByStatus } from '../scripts/func.js'
 import { isParamValid } from '../scripts/paramValidationService'
+import { pingBackendRequest, PING_TIMER } from '../scripts/backendPingService'
 
 export function Home({ header }) {
 	const [loading, setLoading] = useOutletContext();
@@ -22,23 +24,59 @@ export function Home({ header }) {
 
 	useEffect(() => {
 		handleGetAllOperationsRequest();
-
-		//setInterval(() => console.log(new Date()), 10000); // check server ping
 	}, []);
+
+	const fetchPing = async () => {
+		let pingResult = await pingBackendRequest();
+
+		if (!pingResult.server) {
+			setLoading({
+				...loading,
+				data: false,
+				message: WARNING_MESSAGES.server
+			});
+		}
+		else if (!pingResult.database) {
+			setLoading({
+				...loading,
+				data: false,
+				message: WARNING_MESSAGES.database
+			});
+		}
+		else if (operations.length === 0) {
+			setLoading({
+				...loading,
+				data: false,
+				message: WARNING_MESSAGES.defaultData
+			});
+			handleGetAllOperationsRequest();
+		}
+		else {
+			setLoading({
+				...loading,
+				data: true,
+				message: ''
+			});
+		}
+	};
+
+	useInterval(() => {
+		fetchPing();
+	}, PING_TIMER);
 
 	function handleGetAllOperationsRequest() {
 		axios.get(`${API_URI}/Operation`)
 			.then(function (response) {
-				let operations = response.data;
-				if (Array.isArray(operations) && operations.length > 0) {
-					setOperation(operations[0].alias)
-					setOperations(operations);
+				const operationsArray = response.data;
+				if (Array.isArray(operationsArray) && operationsArray.length > 0) {
+					setOperation(operationsArray[0].alias)
+					setOperations(operationsArray);
 				}
 
 				setLoading({
 					preloader: false,
 					data: true,
-					message: operations.length > 0 ? '' : WARNING_MESSAGES.defaultData
+					message: operationsArray.length > 0 ? '' : WARNING_MESSAGES.defaultData
 				});
 			})
 			.catch(function (error) {
