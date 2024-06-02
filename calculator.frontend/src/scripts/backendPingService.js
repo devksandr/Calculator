@@ -1,6 +1,7 @@
 import axios from 'axios'
+import { BACKEND_URI } from '../config.js'
 
-const PING_URI = 'https://localhost:7160/ping';
+const PING_URI = `${BACKEND_URI}/ping`;
 export const PING_TIMER = 10 * 1000;
 export async function pingBackendRequest() {
 	let result = {

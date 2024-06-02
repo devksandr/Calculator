@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react'
 import { useInterval } from '../../hooks/useInterval'
 import axios from 'axios'
-import { API_URI } from '../../scripts/const.js'
+import { API_URI } from '../../const.js'
 import HistoryTable from '../../components/HistoryTable/HistoryTable.jsx';
 import { useOutletContext } from "react-router-dom";
 import { Preloader } from '../../components/Preloader/Preloader.jsx'

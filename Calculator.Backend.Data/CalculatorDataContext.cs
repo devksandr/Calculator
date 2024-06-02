@@ -5,7 +5,10 @@ namespace Calculator.Backend.Data
 {
     public class CalculatorDataContext : DbContext
     {
-        public CalculatorDataContext(DbContextOptions<CalculatorDataContext> options) : base(options) { }
+        public CalculatorDataContext(DbContextOptions<CalculatorDataContext> options) : base(options) 
+        {
+            Database.EnsureCreated();
+        }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

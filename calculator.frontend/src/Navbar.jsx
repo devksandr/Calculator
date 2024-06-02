@@ -1,6 +1,6 @@
 import './Navbar.css'
 import { NavLink } from 'react-router-dom'
-import { MENU } from './scripts/const.js'
+import { MENU } from './const.js'
 
 export function Navbar() {
     return (

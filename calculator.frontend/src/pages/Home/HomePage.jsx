@@ -7,7 +7,7 @@ import Param from '../../components/Param/Param.jsx'
 import Operation from '../../components/Operation/Operation.jsx'
 import Result from '../../components/Result/Result.jsx'
 import Calculation from '../../components/Calculation/Calculation.jsx'
-import { API_URI } from '../../scripts/const.js'
+import { API_URI } from '../../const.js'
 import { Preloader } from '../../components/Preloader/Preloader.jsx'
 import { getConnectionErrorByStatus, WARNING_MESSAGES } from '../../scripts/connectionMessageService.js'
 import { isParamValid } from '../../scripts/paramValidationService'
@@ -103,7 +103,6 @@ export function HomePage({ header }) {
 		axios.post(`${API_URI}/Operation`, body)
 			.then(function (response) {
 				setResult(response.data);
-				console.log(response);
 			})
 			.catch(function (error) {
 				console.log(error);

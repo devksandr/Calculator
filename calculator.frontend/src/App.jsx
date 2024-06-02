@@ -3,7 +3,7 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { HomePage } from './pages/Home/HomePage'
 import { HistoryPage } from './pages/History/HistoryPage'
 import { Layout } from './Layout'
-import { MENU } from './scripts/const.js'
+import { MENU } from './const.js'
 
 function App() {
 	return (
