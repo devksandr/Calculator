@@ -1,0 +1,19 @@
+services:
+    frontend:
+        ports:
+            - 80:5173
+        container_name: frontend
+        networks:
+            - internet
+            - calcnet
+        build:
+            context: calculator.frontend
+            dockerfile: Dockerfile
+
+networks:
+    internet:
+        driver: bridge
+        name: internet
+    calcnet:
+        driver: bridge
+        name: calcnet

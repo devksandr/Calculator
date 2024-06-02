@@ -1,0 +1,15 @@
+services:
+    backend:
+        ports:
+            - 5000:80
+        container_name: backend
+        networks:
+            - calcnet
+        build:
+            context: .
+            dockerfile: Calculator/Dockerfile
+
+networks:
+    calcnet:
+        driver: bridge
+        name: calcnet
